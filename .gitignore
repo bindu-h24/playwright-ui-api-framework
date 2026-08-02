@@ -1,0 +1,20 @@
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+reports/
+logs/
+screenshots/
+allure-results/
+allure-report/
+.env
+.vscode
+.DS_Store
+.env.*
+*.log
+coverage/
+dist/

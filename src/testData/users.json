@@ -1,0 +1,25 @@
+{
+    "validUser": {
+        "email": "himabindu.hb24@gmail.com",
+        "password": "Test@24!"
+    },
+    "invalidUser": {
+        "email": "himabindu.hb2407@gmail.com",
+        "password": "wrongPassword"
+    }, 
+    "products": {
+        "product1": "ZARA COAT 3",
+        "productId": "6960eae1c941646b7a8b3ed3"
+    },
+    "payment": {
+    "cardNumber": "4542 9931 9292 2293",
+    "expiryMonth": "01",
+    "expiryYear": "16",
+    "cvv": "123",
+    "cardHolder": "Bindu"
+  },
+
+  "shipping": {
+    "country": "India"
+  }
+}
