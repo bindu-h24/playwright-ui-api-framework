@@ -5,13 +5,11 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-/playwright/.auth/
 reports/
 logs/
 screenshots/
 allure-results/
 allure-report/
-.env
 .vscode
 .DS_Store
 .env.*
