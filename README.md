@@ -96,9 +96,8 @@ src
 Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/playwright-ui-api-framework.git
+git clone https://github.com/bindu-h24/playwright-ui-api-framework.git
 ```
-
 Install dependencies
 
 ```bash
