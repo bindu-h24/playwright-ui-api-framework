@@ -28,7 +28,7 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
      baseURL: env.baseurl,
-     headless: false,
+     headless: true,
 
     viewport: {
         width: 1920,
