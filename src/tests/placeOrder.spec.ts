@@ -3,20 +3,23 @@ import { TestDataLoader } from '../utils/TestDataLoader';
 import { Logger } from '../utils/Logger';
 
 test.describe('Place Order', () => {
-const users = TestDataLoader.getUsers();
-const orders = TestDataLoader.getOrders();
+
+    test.describe.configure({mode: 'serial'});
+    
+    const users = TestDataLoader.getUsers();
+    const orders = TestDataLoader.getOrders();
 
     for (const order of orders) {
 
         test(`@Regression User should place order for ${order.productName}`,
         async ({ loginPage }) => {
 
-            // Navigate to Login Page
+        // Navigate to Login Page
         await loginPage.navigate();
 
         // Login -> Dashboard
-        const dashboardPage = await loginPage.login(users.validUser.email,users.validUser.password);
-
+        // const dashboardPage = await loginPage.login(users.validUser.email,users.validUser.password);
+        const dashboardPage = loginPage.toDashboard();
         await dashboardPage.verifyDashboardLoaded();
 
         // Add Product
@@ -42,7 +45,7 @@ const orders = TestDataLoader.getOrders();
         await orderConfirmationPage.verifyOrderPlaced();
 
         const orderId = await orderConfirmationPage.getOrderId();
-        Logger.info(`Generated Order ID:, ${orderId}`);
+        Logger.info(`Generated Order ID: ${orderId}`);
 
         const ordersPage = await orderConfirmationPage.header.goToOrders();
 

@@ -5,9 +5,7 @@ test.describe('Modify Product API Response', () => {
     test('User should see modified product price', async ({ page, dashboardPage }) => {
 
         // Intercept Products API
-        await page.route(
-            '**/api/ecom/product/get-all-products',
-            async route => {
+        await page.route('**/api/ecom/product/get-all-products',async route => {
 
                 // Fetch actual backend response
                 const response = await route.fetch();
@@ -16,40 +14,26 @@ test.describe('Modify Product API Response', () => {
                 const body = await response.json();
 
                 // Modify only ZARA COAT 3 price
-                const product = body.data.find(
-                    (p: any) => p.productName === 'ZARA COAT 3'
-                );
-
+                const product = body.data.find((p: any) => p.productName === 'ZARA COAT 3');
+           
                 if (product) {
                     product.productPrice = 999;
                 }
 
-                // Return modified response
-                await route.fulfill({
-                    response,
-                    body: JSON.stringify(body)
-                });
-
+                // Return modified response, json automatically sets the proper content type..
+               await route.fulfill({response,json: body});
             });
 
         // Navigate to Dashboard (Authentication State is used)
-        await dashboardPage.navigate('/dashboard/dash');
-
+        await dashboardPage.navigate('#/dashboard/dash');
         await dashboardPage.verifyDashboardLoaded();
 
         // Verify Product Exists
-        await expect(
-            page.locator('.card-body')
-                .filter({ hasText: 'ZARA COAT 3' })
-        ).toBeVisible();
+        await expect(page.locator('.card-body').filter({ hasText: 'ZARA COAT 3' })).toBeVisible();
 
         // Verify Modified Price
-        await expect(
-            page.locator('.card-body')
-                .filter({ hasText: 'ZARA COAT 3' })
-                .locator('text=$ 999')
-        ).toBeVisible();
-
+        const card = dashboardPage.getProductCard('ZARA COAT 3');
+        await expect(card).toContainText('$ 999');
     });
 
 });

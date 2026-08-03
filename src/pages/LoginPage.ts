@@ -34,4 +34,8 @@ export class LoginPage extends BasePage{
     async getLoginError(): Promise<string> {
         return (await this.loginErrorMessage.textContent()) ?? '';
     }
+
+    toDashboard(): DashboardPage {
+    return new DashboardPage(this.page);
+}
 }

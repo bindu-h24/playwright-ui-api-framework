@@ -9,9 +9,7 @@ test.describe('Mock Products', () => {
     test('User should see mocked product list', async ({ page, loginPage }) => {
 
         // Mock Get All Products API
-        await page.route(
-            '**/api/ecom/product/get-all-products',
-            async route => {
+        await page.route( '**/api/ecom/product/get-all-products',async route => {
 
                 const mockedResponse = {
                     data: [
@@ -37,20 +35,15 @@ test.describe('Mock Products', () => {
                     contentType: 'application/json',
                     body: JSON.stringify(mockedResponse)
                 });
-
             });
 
         // Login
         await loginPage.navigate();
-        const dashboardPage = await loginPage.login(
-            users.validUser.email,
-            users.validUser.password
+        const dashboardPage = await loginPage.login(users.validUser.email,users.validUser.password
         );
 
         // Validate mocked product is displayed
-        await expect(
-            page.getByText('Mock Laptop')
-        ).toBeVisible();
+        await expect(page.getByText('Mock Laptop')).toBeVisible();
 
     });
 

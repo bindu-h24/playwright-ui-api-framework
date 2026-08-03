@@ -1,19 +1,18 @@
 import { test, expect } from '../fixtures/testFixture';
+import { Logger } from '../utils/Logger';
 
 test.describe('API Response Validation', () => {
 
-    test('Validate Products API response and compare with UI',
-        async ({ page, dashboardPage }) => {
+    test('Validate Products API response and compare with UI', async ({ page, dashboardPage }) => {
 
-        // Navigate to Dashboard
-        await dashboardPage.navigate('/dashboard/dash');
-        await dashboardPage.verifyDashboardLoaded();
-
-        // Wait for Products API response
-        const response = await page.waitForResponse(response =>
-            response.url().includes('/api/ecom/product/get-all-products') &&
-            response.status() === 200
-        );
+        // Wait for Products API while navigating
+        const [response] = await Promise.all([
+            page.waitForResponse(response =>
+                response.url().includes('/api/ecom/product/get-all-products') &&
+                response.status() === 200),
+                dashboardPage.navigate('#/dashboard/dash')
+            ]);
+            await dashboardPage.verifyDashboardLoaded();
 
         // Parse API response
         const body = await response.json();
@@ -23,23 +22,17 @@ test.describe('API Response Validation', () => {
         expect(body.count).toBeGreaterThan(0);
 
         // Find Product from API response
-        const product = body.data.find(
-            (p: any) => p.productName === 'ZARA COAT 3'
-        );
-
+        const product = body.data.find((p: any) => p.productName === 'ZARA COAT 3');
         expect(product).toBeTruthy();
 
-        console.log("API Product:", product);
+        Logger.info(`API Product:, ${product}`);
 
         // Validate Product Name on UI
-        const productCard = page.locator(".card-body")
-            .filter({ hasText: product.productName });
-
+        const productCard = page.locator(".card-body").filter({ hasText: product.productName });
         await expect(productCard).toBeVisible();
 
         // Validate Product Price on UI
-        await expect(productCard).toContainText(
-            product.productPrice.toString()
+        await expect(productCard).toContainText(product.productPrice.toString()
         );
 
     });

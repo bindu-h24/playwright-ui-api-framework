@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { AuthApi } from "../api/AuthApi";
 import users from "../testData/users.json";
+import { Logger } from "../utils/Logger";
 
 test("Login API", async () => {
 
@@ -12,9 +13,7 @@ test("Login API", async () => {
     });
 
     expect(response.message).toBe("Login Successfully");
-
     expect(response.token).toBeTruthy();
-
-    console.log(response.token);
+    Logger.info(response.token);
 
 });

@@ -49,4 +49,10 @@ export class DashboardPage extends BasePage {
     throw new Error(`Product '${productName}' was not found.`);
 }
 
+getProductCard(productName: string): Locator {
+    return this.productCards.filter({
+        hasText: productName
+    });
+}
+
 }
