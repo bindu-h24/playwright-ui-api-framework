@@ -15,25 +15,19 @@ export class OrderConfirmationPage extends BasePage {
         this.confirmationMessage = this.page.locator(".hero-primary");
         this.orderIdLabel = this.page.locator(".em-spacer-1 .ng-star-inserted");
         this.header = new HeaderComponent(page);
-
     }
 
     // Verify Order Confirmation Page loaded successfully.
     async verifyOrderPlaced(): Promise<void> {
 
-    await expect(this.confirmationMessage)
-        .toHaveText(" Thankyou for the order. ");
+    await expect(this.confirmationMessage).toHaveText(" Thankyou for the order. ");
 
 }
 
 // Returns generated Order ID.
 async getOrderId(): Promise<string> {
 
-    const orderId =
-        await this.orderIdLabel.textContent();
-
-    return orderId
-        ?.replace(/\|/g, "")
-        .trim() ?? "";
+    const orderId = await this.orderIdLabel.textContent();
+    return orderId?.replace(/\|/g, "").trim() ?? "";
 }
 }
